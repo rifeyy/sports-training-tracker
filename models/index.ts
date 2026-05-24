@@ -1,17 +1,16 @@
-import mongoose, { Schema, model, models } from "mongoose";
+﻿import mongoose, { Schema, model, models } from "mongoose";
 
-// ? USER
+// ✅ USER
 const UserSchema = new Schema({
   email: String,
   password: String,
   role: { type: String, default: "client" },
-  role: { type: String, default: "user" },
 });
 
 export const User =
   models.User || model("User", UserSchema);
 
-// ? ATHLETE
+// ✅ ATHLETE
 const AthleteSchema = new Schema({
   name: String,
   sport: String,
@@ -21,7 +20,7 @@ const AthleteSchema = new Schema({
 export const Athlete =
   models.Athlete || model("Athlete", AthleteSchema);
 
-// ? SESSION
+// ✅ SESSION
 const SessionSchema = new Schema({
   athleteId: String,
   type: String,
@@ -33,7 +32,7 @@ const SessionSchema = new Schema({
 export const Session =
   models.Session || model("Session", SessionSchema);
 
-// ? TEAM
+// ✅ TEAM
 const TeamSchema = new Schema({
   name: String,
 });
@@ -41,17 +40,58 @@ const TeamSchema = new Schema({
 export const Team =
   models.Team || model("Team", TeamSchema);
 
-const ClientProfileSchema = new mongoose.Schema({
-  userId: String,
-  poids: Number,
-  taille: Number,
-  bmi: Number,
-  condition: String,
-  bodyType: String,
-  goal: String,
-  diet: String,
-  workout: String,
-});
+// ✅ CLIENT PROFILE
+const ClientProfileSchema = new Schema(
+  {
+    userId: String,
+    name: String,
+    email: String,
+    age: String,
+    goal: String,
+    activity: String,
+  },
+  {
+    timestamps: true,
+  }
+);
 
 export const ClientProfile =
   models.ClientProfile || model("ClientProfile", ClientProfileSchema);
+
+// ✅ CLIENT METRIC
+const ClientMetricSchema = new Schema(
+  {
+    userId: String,
+    weight: Number,
+    height: Number,
+    bmi: Number,
+    calories: Number,
+    goal: String,
+    activity: String,
+    date: String,
+  },
+  {
+    timestamps: true,
+  }
+);
+
+export const ClientMetric =
+  models.ClientMetric || model("ClientMetric", ClientMetricSchema);
+
+// ✅ CLIENT PHOTO
+const ClientPhotoSchema = new Schema(
+  {
+    userId: String,
+    image: String,
+    goal: String,
+    score: Number,
+    feedback: String,
+    date: String,
+  },
+  {
+    timestamps: true,
+  }
+);
+
+export const ClientPhoto =
+  models.ClientPhoto || model("ClientPhoto", ClientPhotoSchema);

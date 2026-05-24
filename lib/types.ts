@@ -1,4 +1,4 @@
-﻿export type UserRole = "coach" | "admin";
+export type UserRole = "coach" | "admin";
 export type AthleteStatus = "active" | "injured" | "resting";
 export type SessionType = "strength" | "cardio" | "technical" | "recovery";
 

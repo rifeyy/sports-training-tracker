@@ -1,58 +1,25 @@
 ﻿"use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Toaster } from "react-hot-toast";
+import Sidebar from "./components/Sidebar";
+import Topbar from "./components/Topbar";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
-
-  const menu = [
-    { name: "Dashboard", href: "/dashboard" },
-    { name: "Athletes", href: "/dashboard/athletes" },
-    { name: "Seances", href: "/dashboard/sessions" },
-    { name: "Statistiques", href: "/dashboard/stats" },
-    { name: "Equipes", href: "/dashboard/teams" },
-    { name: "Planning", href: "/dashboard/planning" },
-  ];
-
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-[#0B1220]">
 
-      {/* ✅ SIDEBAR */}
-      <div className="w-64 bg-gray-900 text-white p-6">
+      <Sidebar />
 
-        <h1 className="text-xl font-bold mb-6">⚡ AthleteOS</h1>
+      <main className="flex-1 p-6 text-white">
 
-        <div className="flex flex-col gap-3">
-          {menu.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`block px-3 py-2 rounded ${
-                pathname === item.href ? "bg-green-600" : "hover:bg-gray-800"
-              }`}
-            >
-              {item.name}
-            </Link>
-          ))}
-        </div>
-
-      </div>
-
-      {/* ✅ MAIN */}
-      <div className="flex-1 bg-black text-white p-6">
-
-        {/* ✅ TOAST */}
-        <Toaster />
+        <Topbar />
 
         {children}
 
-      </div>
+      </main>
 
     </div>
   );
