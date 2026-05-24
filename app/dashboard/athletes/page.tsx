@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 
@@ -41,6 +41,8 @@ export default function AthletesPage() {
     const t = teams.find(x => x._id === id);
     return t ? t.name : "No team";
   };
+  const [search, setSearch] = useState("");
+
 
   return (
     <div className="p-8 bg-black text-white min-h-screen">
@@ -99,3 +101,5 @@ export default function AthletesPage() {
     </div>
   );
 }
+
+

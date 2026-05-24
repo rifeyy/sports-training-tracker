@@ -1,68 +1,106 @@
 import { NextResponse, NextRequest } from "next/server";
 import { connectDB } from "@/lib/mongodb";
-import Workout from "@/models/Workout";
-import { getUserFromRequest } from "@/lib/protect";
+import { Workout } from "@/models/Workout";
 
-// ✅ UPDATE
-export async function PUT(
+// ✅ GET ONE WORKOUT
+export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
 
-    const userId = getUserFromRequest(req);
+    const { id } = await params;
 
-    if (!userId) {
+    const workout = await Workout.findById(id);
+
+    if (!workout) {
       return NextResponse.json(
-        { message: "Unauthorized" },
-        { status: 401 }
+        { success: false, message: "Workout not found" },
+        { status: 404 }
       );
     }
 
-    const body = await req.json();
+    return NextResponse.json({
+      success: true,
+      data: workout,
+    });
+  } catch (error: any) {
+    console.log("GET WORKOUT ERROR:", error);
 
-    const updated = await Workout.findOneAndUpdate(
-      { _id: params.id, userId },
-      body,
-      { new: true }
-    );
-
-    return NextResponse.json(updated);
-  } catch (error) {
     return NextResponse.json(
-      { message: "Error" },
+      { success: false, message: error.message || "Get workout error" },
       { status: 500 }
     );
   }
 }
 
-// ✅ DELETE
-export async function DELETE(
+// ✅ UPDATE WORKOUT
+export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
 
-    const userId = getUserFromRequest(req);
+    const { id } = await params;
+    const body = await req.json();
 
-    if (!userId) {
+    const updated = await Workout.findByIdAndUpdate(
+      id,
+      body,
+      { new: true }
+    );
+
+    if (!updated) {
       return NextResponse.json(
-        { message: "Unauthorized" },
-        { status: 401 }
+        { success: false, message: "Workout not found" },
+        { status: 404 }
       );
     }
 
-    await Workout.findOneAndDelete({
-      _id: params.id,
-      userId,
+    return NextResponse.json({
+      success: true,
+      data: updated,
     });
+  } catch (error: any) {
+    console.log("UPDATE WORKOUT ERROR:", error);
 
-    return NextResponse.json({ message: "Deleted ✅" });
-  } catch (error) {
     return NextResponse.json(
-      { message: "Error" },
+      { success: false, message: error.message || "Update workout error" },
+      { status: 500 }
+    );
+  }
+}
+
+// ✅ DELETE WORKOUT
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    await connectDB();
+
+    const { id } = await params;
+
+    const deleted = await Workout.findByIdAndDelete(id);
+
+    if (!deleted) {
+      return NextResponse.json(
+        { success: false, message: "Workout not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: "Workout deleted successfully",
+    });
+  } catch (error: any) {
+    console.log("DELETE WORKOUT ERROR:", error);
+
+    return NextResponse.json(
+      { success: false, message: error.message || "Delete workout error" },
       { status: 500 }
     );
   }
