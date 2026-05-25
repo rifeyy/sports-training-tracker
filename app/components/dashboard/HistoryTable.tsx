@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import SkeletonCard from "./SkeletonCard";
@@ -137,3 +137,7 @@ export default function HistoryTable() {
     </div>
   );
 }
+
+
+
+

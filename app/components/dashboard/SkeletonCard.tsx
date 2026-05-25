@@ -1,4 +1,4 @@
-﻿export default function SkeletonCard() {
+export default function SkeletonCard() {
   return (
     <div className="premium-card animate-pulse">
 
@@ -13,3 +13,7 @@
     </div>
   );
 }
+
+
+
+

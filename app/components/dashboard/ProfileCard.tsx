@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
@@ -108,7 +108,7 @@ export default function ProfileCard() {
       window.dispatchEvent(new Event("profileUpdated"));
       window.dispatchEvent(new Event("metricsUpdated"));
 
-      toast.success("Profile saved to MongoDB ✅");
+      toast.success("Profile saved to MongoDB ?");
 
       setOpen(false);
     } catch (error) {
@@ -138,7 +138,7 @@ export default function ProfileCard() {
             onClick={() => setOpen(false)}
             className="bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded-lg"
           >
-            ✕
+            ?
           </button>
 
         </div>
@@ -280,3 +280,7 @@ export default function ProfileCard() {
     </>
   );
 }
+
+
+
+

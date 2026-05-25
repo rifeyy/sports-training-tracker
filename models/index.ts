@@ -1,6 +1,6 @@
-﻿import mongoose, { Schema, model, models } from "mongoose";
+import mongoose, { Schema, model, models } from "mongoose";
 
-// ✅ USER
+// ? USER
 const UserSchema = new Schema({
   email: String,
   password: String,
@@ -10,7 +10,7 @@ const UserSchema = new Schema({
 export const User =
   models.User || model("User", UserSchema);
 
-// ✅ ATHLETE
+// ? ATHLETE
 const AthleteSchema = new Schema({
   name: String,
   sport: String,
@@ -20,7 +20,7 @@ const AthleteSchema = new Schema({
 export const Athlete =
   models.Athlete || model("Athlete", AthleteSchema);
 
-// ✅ SESSION
+// ? SESSION
 const SessionSchema = new Schema({
   athleteId: String,
   type: String,
@@ -32,7 +32,7 @@ const SessionSchema = new Schema({
 export const Session =
   models.Session || model("Session", SessionSchema);
 
-// ✅ TEAM
+// ? TEAM
 const TeamSchema = new Schema({
   name: String,
 });
@@ -40,7 +40,7 @@ const TeamSchema = new Schema({
 export const Team =
   models.Team || model("Team", TeamSchema);
 
-// ✅ CLIENT PROFILE
+// ? CLIENT PROFILE
 const ClientProfileSchema = new Schema(
   {
     userId: String,
@@ -58,7 +58,7 @@ const ClientProfileSchema = new Schema(
 export const ClientProfile =
   models.ClientProfile || model("ClientProfile", ClientProfileSchema);
 
-// ✅ CLIENT METRIC
+// ? CLIENT METRIC
 const ClientMetricSchema = new Schema(
   {
     userId: String,
@@ -78,7 +78,7 @@ const ClientMetricSchema = new Schema(
 export const ClientMetric =
   models.ClientMetric || model("ClientMetric", ClientMetricSchema);
 
-// ✅ CLIENT PHOTO
+// ? CLIENT PHOTO
 const ClientPhotoSchema = new Schema(
   {
     userId: String,
@@ -95,3 +95,5 @@ const ClientPhotoSchema = new Schema(
 
 export const ClientPhoto =
   models.ClientPhoto || model("ClientPhoto", ClientPhotoSchema);
+
+

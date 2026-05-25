@@ -1,7 +1,8 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 export default function AdminClientsPage() {
   const [clients, setClients] = useState<any[]>([]);
@@ -34,6 +35,34 @@ export default function AdminClientsPage() {
   useEffect(() => {
     fetchClients();
   }, []);
+
+  const deleteClient = async (clientId: string, clientName: string) => {
+    const confirmed = window.confirm(
+      `Are you sure you want to delete ${clientName}? This will delete profile, metrics and photos.`
+    );
+
+    if (!confirmed) return;
+
+    try {
+      const res = await fetch(`/api/admin/clients/${clientId}`, {
+        method: "DELETE",
+      });
+
+      const data = await res.json();
+
+      if (!data.success) {
+        toast.error(data.message || "Delete failed");
+        return;
+      }
+
+      toast.success("Client deleted successfully");
+
+      setClients((prev) => prev.filter((client) => client.userId !== clientId));
+    } catch (error) {
+      console.log("DELETE CLIENT UI ERROR:", error);
+      toast.error("Delete client error");
+    }
+  };
 
   const filteredClients = useMemo(() => {
     return clients.filter((client) => {
@@ -113,7 +142,6 @@ export default function AdminClientsPage() {
 
       </div>
 
-      {/* Filters */}
       <div className="bg-gray-900 border border-gray-800 p-5 rounded-2xl mb-6">
 
         <div className="grid md:grid-cols-4 gap-4">
@@ -192,6 +220,7 @@ export default function AdminClientsPage() {
 
             const goal = profile?.goal || metric?.goal || "Not set";
             const activity = profile?.activity || metric?.activity || "Not set";
+            const displayName = profile?.name || client.email || "Client";
 
             return (
               <div
@@ -232,14 +261,14 @@ export default function AdminClientsPage() {
                   <div className="bg-gray-800 p-4 rounded-xl">
                     <p className="text-xs text-gray-400">Latest Weight</p>
                     <h3 className="text-lg font-bold">
-                      {metric ? `${metric.weight}kg` : "—"}
+                      {metric ? `${metric.weight}kg` : "-"}
                     </h3>
                   </div>
 
                   <div className="bg-gray-800 p-4 rounded-xl">
                     <p className="text-xs text-gray-400">BMI</p>
                     <h3 className="text-lg font-bold text-green-400">
-                      {metric ? metric.bmi : "—"}
+                      {metric ? metric.bmi : "-"}
                     </h3>
                   </div>
 
@@ -259,18 +288,27 @@ export default function AdminClientsPage() {
 
                 </div>
 
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center gap-3">
 
                   <p className="text-xs text-gray-500">
                     ID: {client.userId.slice(0, 8)}...
                   </p>
 
-                  <Link
-                    href={`/dashboard/clients/${client.userId}`}
-                    className="bg-blue-500 hover:bg-blue-400 px-4 py-2 rounded-xl transition"
-                  >
-                    View Details
-                  </Link>
+                  <div className="flex gap-2">
+                    <Link
+                      href={`/dashboard/clients/${client.userId}`}
+                      className="bg-green-500 hover:bg-green-400 text-black px-3 py-2 rounded-xl text-sm transition"
+                    >
+                      View
+                    </Link>
+
+                    <button
+                      onClick={() => deleteClient(client.userId, displayName)}
+                      className="bg-red-500 hover:bg-red-400 px-3 py-2 rounded-xl text-sm transition"
+                    >
+                      Delete
+                    </button>
+                  </div>
 
                 </div>
 

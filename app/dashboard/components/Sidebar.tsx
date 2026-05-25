@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -20,7 +20,7 @@ export default function Sidebar() {
     <aside className="w-64 min-h-screen bg-gray-950 border-r border-gray-800 p-5 text-white">
 
       <h1 className="text-xl font-bold mb-8">
-        ⚡ AthleteOS
+        ? AthleteOS
       </h1>
 
       <nav className="space-y-2">
@@ -46,3 +46,7 @@ export default function Sidebar() {
     </aside>
   );
 }
+
+
+
+

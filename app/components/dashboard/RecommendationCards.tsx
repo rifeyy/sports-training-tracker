@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 
@@ -24,9 +24,11 @@ export default function RecommendationCards() {
     loadData();
 
     window.addEventListener("metricsUpdated", loadData);
+    window.addEventListener("profileUpdated", loadData);
 
     return () => {
       window.removeEventListener("metricsUpdated", loadData);
+      window.removeEventListener("profileUpdated", loadData);
     };
   }, []);
 
@@ -75,7 +77,7 @@ export default function RecommendationCards() {
     dietTitle = "Balanced Nutrition";
     dietItems = [
       "Keep meals balanced",
-      "Protein + carbs + healthy fats",
+      "Protein plus carbs plus healthy fats",
       "Maintain daily calories",
       "Eat vegetables and fruits",
       "Stay consistent"
@@ -131,10 +133,14 @@ export default function RecommendationCards() {
 
         <div className="bg-gray-800 p-4 rounded-xl">
           <p className="text-gray-400 text-sm">Daily Calories Target</p>
+
           <h3 className="text-3xl font-bold text-green-400 mt-1">
             {calories}
           </h3>
-          <p className="text-xs text-gray-500">kcal / day</p>
+
+          <p className="text-xs text-gray-500">
+            kcal / day
+          </p>
         </div>
 
       </div>
@@ -152,7 +158,7 @@ export default function RecommendationCards() {
         <ul className="space-y-3 text-sm text-gray-300">
           {dietItems.map((item, index) => (
             <li key={index} className="flex gap-2">
-              <span className="text-green-400">•</span>
+              <span className="text-green-400">-</span>
               <span>{item}</span>
             </li>
           ))}
@@ -173,7 +179,7 @@ export default function RecommendationCards() {
         <ul className="space-y-3 text-sm text-gray-300">
           {workoutItems.map((item, index) => (
             <li key={index} className="flex gap-2">
-              <span className="text-blue-400">•</span>
+              <span className="text-blue-400">-</span>
               <span>{item}</span>
             </li>
           ))}
@@ -184,5 +190,3 @@ export default function RecommendationCards() {
     </div>
   );
 }
-
-

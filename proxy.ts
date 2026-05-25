@@ -1,4 +1,4 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function proxy(req: NextRequest) {
@@ -24,3 +24,5 @@ export function proxy(req: NextRequest) {
 export const config = {
   matcher: ["/dashboard/:path*", "/client/:path*"],
 };
+
+

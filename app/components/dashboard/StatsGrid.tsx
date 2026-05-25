@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -80,7 +80,7 @@ export default function StatsGrid() {
         date: new Date().toLocaleDateString(),
       };
 
-      // ✅ localStorage fallback
+      // ? localStorage fallback
       localStorage.setItem("clientWeight", String(weight));
       localStorage.setItem("clientHeight", String(height));
       localStorage.setItem("clientActivity", activity);
@@ -90,7 +90,7 @@ export default function StatsGrid() {
       const newHistory = [...oldHistory, newRecord];
       localStorage.setItem("clientMetricsHistory", JSON.stringify(newHistory));
 
-      // ✅ MongoDB save
+      // ? MongoDB save
       const res = await fetch("/api/client/metrics", {
         method: "POST",
         headers: {
@@ -108,7 +108,7 @@ export default function StatsGrid() {
 
       window.dispatchEvent(new Event("metricsUpdated"));
 
-      toast.success("Metrics saved to MongoDB ✅");
+      toast.success("Metrics saved to MongoDB ?");
     } catch (error) {
       console.log(error);
       toast.error("Save metrics error");
@@ -248,3 +248,7 @@ export default function StatsGrid() {
     </div>
   );
 }
+
+
+
+

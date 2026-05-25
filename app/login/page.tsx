@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 
@@ -21,7 +21,7 @@ export default function LoginPage() {
     const data = await res.json();
 
     if (!data.success) {
-      alert(data.message || "Login failed");
+      success(data.message || "Login failed");
       return;
     }
 
@@ -40,7 +40,7 @@ export default function LoginPage() {
     } else if (data.role === "client") {
       window.location.href = "/client";
     } else {
-      alert("Invalid role");
+      success("Invalid role");
     }
   };
 
@@ -81,3 +81,7 @@ export default function LoginPage() {
     </div>
   );
 }
+
+
+
+

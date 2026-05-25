@@ -1,8 +1,8 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongoose";
 import { ClientMetric } from "@/models";
 
-// ✅ GET /api/client/metrics?userId=...
+// ? GET /api/client/metrics?userId=...
 export async function GET(req: Request) {
   try {
     await connectDB();
@@ -33,7 +33,7 @@ export async function GET(req: Request) {
   }
 }
 
-// ✅ POST /api/client/metrics
+// ? POST /api/client/metrics
 export async function POST(req: Request) {
   try {
     await connectDB();
@@ -72,7 +72,7 @@ export async function POST(req: Request) {
   }
 }
 
-// ✅ DELETE /api/client/metrics?userId=...
+// ? DELETE /api/client/metrics?userId=...
 export async function DELETE(req: Request) {
   try {
     await connectDB();
@@ -102,3 +102,7 @@ export async function DELETE(req: Request) {
     );
   }
 }
+
+
+
+

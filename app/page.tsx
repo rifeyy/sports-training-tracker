@@ -1,86 +1,85 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 
 export default function HomePage() {
   return (
-    <div className="bg-black text-white min-h-screen flex flex-col items-center text-center px-6">
+    <div className="min-h-screen bg-black text-white flex flex-col">
 
-      {/* ✅ HERO */}
-      <div className="flex flex-col items-center justify-center flex-1">
+      {/* HERO */}
+      <section className="flex-1 flex flex-col items-center justify-center px-6 text-center">
 
-        <h1 className="text-5xl font-bold mb-6">
-          ⚡ AthleteOS
-        </h1>
+        <div className="max-w-3xl">
 
-        <p className="text-gray-400 mb-8 max-w-xl">
-          Manage your athletes, sessions and performance in one powerful dashboard.
-        </p>
+          <h1 className="text-5xl md:text-6xl font-bold mb-6">
+            AthleteOS
+          </h1>
 
-        <div className="flex gap-4 mb-20">
+          <p className="text-gray-400 text-lg mb-8">
+            A smart fitness and sports training platform for admins, coaches and clients.
+          </p>
 
-          <Link href="/register" className="bg-green-500 px-6 py-3 rounded-lg">
-            Get Started
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
 
-          <Link href="/login" className="border border-gray-600 px-6 py-3 rounded-lg">
-            Login
-          </Link>
+            <Link
+              href="/login"
+              className="bg-green-500 hover:bg-green-400 text-black px-6 py-3 rounded-xl font-semibold transition"
+            >
+              Login
+            </Link>
 
-        </div>
+            <Link
+              href="/register"
+              className="border border-gray-700 hover:border-green-400 px-6 py-3 rounded-xl font-semibold transition"
+            >
+              Create Account
+            </Link>
 
-        {/* ✅ FEATURES */}
-        <div className="grid md:grid-cols-3 gap-8 w-full max-w-5xl">
-
-          <div className="bg-gray-900 p-6 rounded-xl">
-            <h3 className="font-bold mb-2">📊 Analytics</h3>
-            <p className="text-gray-400 text-sm">
-              Track sessions & performance
-            </p>
-          </div>
-
-          <div className="bg-gray-900 p-6 rounded-xl">
-            <h3 className="font-bold mb-2">📅 Planning</h3>
-            <p className="text-gray-400 text-sm">
-              Weekly calendar with drag & drop
-            </p>
-          </div>
-
-          <div className="bg-gray-900 p-6 rounded-xl">
-            <h3 className="font-bold mb-2">👥 Teams</h3>
-            <p className="text-gray-400 text-sm">
-              Organize athletes efficiently
-            </p>
           </div>
 
         </div>
 
-        {/* ✅ CTA */}
-        <div className="mt-20">
+      </section>
 
-          <h2 className="text-3xl mb-4">
-            Start managing like a pro 🚀
-          </h2>
+      {/* FEATURES */}
+      <section className="px-6 pb-16">
 
-          <Link href="/register" className="bg-blue-500 px-6 py-3 rounded-lg">
-            Create Account
-          </Link>
+        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6">
+
+          <div className="bg-gray-900 border border-gray-800 p-6 rounded-2xl">
+            <h2 className="text-xl font-bold mb-3">
+              Admin Dashboard
+            </h2>
+            <p className="text-gray-400">
+              Manage clients, athletes, teams, sessions, planning and statistics from one place.
+            </p>
+          </div>
+
+          <div className="bg-gray-900 border border-gray-800 p-6 rounded-2xl">
+            <h2 className="text-xl font-bold mb-3">
+              Client Dashboard
+            </h2>
+            <p className="text-gray-400">
+              Track weight, BMI, calories, progress photos, recommendations and reports.
+            </p>
+          </div>
+
+          <div className="bg-gray-900 border border-gray-800 p-6 rounded-2xl">
+            <h2 className="text-xl font-bold mb-3">
+              Smart Progress
+            </h2>
+            <p className="text-gray-400">
+              Visualize progress with charts, history, goals and MongoDB saved data.
+            </p>
+          </div>
 
         </div>
 
-      </div>
+      </section>
 
-      {/* ✅ FOOTER CLEAN */}
-      <footer className="w-full border-t border-gray-800 py-6 text-center text-sm text-gray-500">
-
-        <p>© 2026 AthleteOS. All rights reserved.</p>
-
-        <div className="flex justify-center gap-6 mt-2">
-          <span>Privacy</span>
-          <span>Terms</span>
-          <span>Contact</span>
-        </div>
-
+      {/* FOOTER */}
+      <footer className="border-t border-gray-900 py-6 text-center text-gray-500 text-sm">
+        © 2026 AthleteOS. All rights reserved.
       </footer>
 
     </div>

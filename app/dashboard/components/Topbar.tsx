@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 export default function Topbar() {
   const logout = () => {
@@ -34,3 +34,7 @@ export default function Topbar() {
     </div>
   );
 }
+
+
+
+

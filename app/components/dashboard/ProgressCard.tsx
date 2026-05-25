@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 
@@ -151,7 +151,7 @@ export default function ProgressCard() {
           <p className="text-gray-400 text-sm">Remaining</p>
 
           <h3 className={isGoalReached ? "text-xl font-bold text-green-400" : "text-xl font-bold text-yellow-400"}>
-            {isGoalReached ? "Goal reached ✅" : `${remaining.toFixed(1)}kg`}
+            {isGoalReached ? "Goal reached ?" : `${remaining.toFixed(1)}kg`}
           </h3>
         </div>
 
@@ -160,3 +160,7 @@ export default function ProgressCard() {
     </div>
   );
 }
+
+
+
+

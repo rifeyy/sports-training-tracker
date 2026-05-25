@@ -1,4 +1,4 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import { connectDB } from "@/lib/mongoose";
 import { User } from "@/models";
@@ -52,3 +52,7 @@ export async function POST(req: Request) {
     );
   }
 }
+
+
+
+

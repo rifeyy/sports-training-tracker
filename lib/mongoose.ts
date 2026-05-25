@@ -1,4 +1,4 @@
-﻿import mongoose from "mongoose";
+import mongoose from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
@@ -25,7 +25,7 @@ const cached: MongooseCache =
 
 export async function connectDB() {
   if (cached.conn) {
-    console.log("✅ MongoDB CONNECTED");
+    console.log("? MongoDB CONNECTED");
     return cached.conn;
   }
 
@@ -33,7 +33,7 @@ export async function connectDB() {
     cached.promise = mongoose
       .connect(MONGODB_URI as string)
       .then((mongooseInstance) => {
-        console.log("✅ MongoDB CONNECTED");
+        console.log("? MongoDB CONNECTED");
         return mongooseInstance;
       });
   }
@@ -41,3 +41,7 @@ export async function connectDB() {
   cached.conn = await cached.promise;
   return cached.conn;
 }
+
+
+
+

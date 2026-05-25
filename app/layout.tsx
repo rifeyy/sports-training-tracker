@@ -1,4 +1,11 @@
+﻿import type { Metadata } from "next";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "AthleteOS",
+  description: "Smart Fitness & Training Management Platform",
+};
 
 export default function RootLayout({
   children,
@@ -9,6 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {children}
+        <Toaster position="top-right" />
       </body>
     </html>
   );

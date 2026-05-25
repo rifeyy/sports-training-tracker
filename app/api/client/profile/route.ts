@@ -1,4 +1,4 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongoose";
 import { ClientProfile, ClientMetric } from "@/models";
 
@@ -85,3 +85,7 @@ export async function POST(req: Request) {
     );
   }
 }
+
+
+
+

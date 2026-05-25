@@ -1,4 +1,4 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
 
@@ -37,3 +37,7 @@ export async function POST(req: Request) {
     text: data.choices[0].message.content
   });
 }
+
+
+
+

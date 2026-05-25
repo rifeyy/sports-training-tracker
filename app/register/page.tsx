@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 
@@ -25,7 +25,7 @@ export default function RegisterPage() {
 
       {/* LOGO */}
       <div className="absolute top-10 text-center">
-        <h1 className="text-2xl font-bold">⚡ AthleteOS</h1>
+        <h1 className="text-2xl font-bold">? AthleteOS</h1>
         <p className="text-gray-400 text-sm">Create your account</p>
       </div>
 
@@ -73,3 +73,7 @@ export default function RegisterPage() {
     </div>
   );
 }
+
+
+
+

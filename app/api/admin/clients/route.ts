@@ -1,26 +1,26 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongoose";
 import { User, ClientProfile, ClientMetric, ClientPhoto } from "@/models";
 
-// ✅ GET /api/admin/clients
+// ? GET /api/admin/clients
 export async function GET() {
   try {
     await connectDB();
 
-    // ✅ get all clients
+    // ? get all clients
     const clients = await User.find({ role: "client" }).select("-password");
 
     const result = await Promise.all(
       clients.map(async (client) => {
         const userId = client._id.toString();
 
-        // ✅ profile
+        // ? profile
         const profile = await ClientProfile.findOne({ userId });
 
-        // ✅ metrics
+        // ? metrics
         const metrics = await ClientMetric.find({ userId }).sort({ createdAt: 1 });
 
-        // ✅ photos count
+        // ? photos count
         const photosCount = await ClientPhoto.countDocuments({ userId });
 
         const latestMetric =
@@ -77,3 +77,7 @@ export async function GET() {
     );
   }
 }
+
+
+
+

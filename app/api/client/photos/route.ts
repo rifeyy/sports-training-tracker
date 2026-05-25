@@ -1,4 +1,4 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongoose";
 import { ClientPhoto, ClientMetric, ClientProfile } from "@/models";
 
@@ -71,7 +71,7 @@ function calculatePhotoScore(goal: string, metrics: any[]) {
   };
 }
 
-// ✅ GET /api/client/photos?userId=...
+// ? GET /api/client/photos?userId=...
 export async function GET(req: Request) {
   try {
     await connectDB();
@@ -102,7 +102,7 @@ export async function GET(req: Request) {
   }
 }
 
-// ✅ POST /api/client/photos
+// ? POST /api/client/photos
 export async function POST(req: Request) {
   try {
     await connectDB();
@@ -146,7 +146,7 @@ export async function POST(req: Request) {
   }
 }
 
-// ✅ DELETE /api/client/photos?userId=...
+// ? DELETE /api/client/photos?userId=...
 export async function DELETE(req: Request) {
   try {
     await connectDB();
@@ -176,3 +176,7 @@ export async function DELETE(req: Request) {
     );
   }
 }
+
+
+
+
