@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { error } from "@/lib/toast";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -21,7 +22,7 @@ export default function LoginPage() {
     const data = await res.json();
 
     if (!data.success) {
-      success(data.message || "Login failed");
+      error(data.message || "Login failed");
       return;
     }
 
@@ -40,7 +41,7 @@ export default function LoginPage() {
     } else if (data.role === "client") {
       window.location.href = "/client";
     } else {
-      success("Invalid role");
+      error("Invalid role");
     }
   };
 
@@ -81,7 +82,3 @@ export default function LoginPage() {
     </div>
   );
 }
-
-
-
-
