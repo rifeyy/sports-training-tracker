@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongoose";
-import { Athlete } from "@/models";
+import { Team } from "@/models";
 
 export async function PUT(
   req: Request,
@@ -12,32 +12,42 @@ export async function PUT(
     const { id } = await params;
     const body = await req.json();
 
-    const athlete = await Athlete.findByIdAndUpdate(
+    if (!body.name) {
+      return NextResponse.json(
+        { success: false, message: "Team name is required" },
+        { status: 400 }
+      );
+    }
+
+    const team = await Team.findByIdAndUpdate(
       id,
       {
         name: body.name,
-        sport: body.sport,
-        teamId: body.teamId || "",
       },
-      { new: true }
+      {
+        new: true,
+      }
     );
 
-    if (!athlete) {
+    if (!team) {
       return NextResponse.json(
-        { success: false, message: "Athlete not found" },
+        { success: false, message: "Team not found" },
         { status: 404 }
       );
     }
 
     return NextResponse.json({
       success: true,
-      data: athlete,
+      data: team,
     });
   } catch (error: any) {
-    console.log("UPDATE ATHLETE ERROR:", error);
+    console.log("UPDATE TEAM ERROR:", error);
 
     return NextResponse.json(
-      { success: false, message: error.message || "Update athlete error" },
+      {
+        success: false,
+        message: error.message || "Update team error",
+      },
       { status: 500 }
     );
   }
@@ -52,24 +62,27 @@ export async function DELETE(
 
     const { id } = await params;
 
-    const athlete = await Athlete.findByIdAndDelete(id);
+    const team = await Team.findByIdAndDelete(id);
 
-    if (!athlete) {
+    if (!team) {
       return NextResponse.json(
-        { success: false, message: "Athlete not found" },
+        { success: false, message: "Team not found" },
         { status: 404 }
       );
     }
 
     return NextResponse.json({
       success: true,
-      message: "Athlete deleted successfully",
+      message: "Team deleted successfully",
     });
   } catch (error: any) {
-    console.log("DELETE ATHLETE ERROR:", error);
+    console.log("DELETE TEAM ERROR:", error);
 
     return NextResponse.json(
-      { success: false, message: error.message || "Delete athlete error" },
+      {
+        success: false,
+        message: error.message || "Delete team error",
+      },
       { status: 500 }
     );
   }

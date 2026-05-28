@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 
@@ -159,8 +159,44 @@ export default function ProgressCard() {
 
     </div>
   );
+
+  // ✅ ===== BMI + CALORIES FIX =====
+  const weightValue = Number(weight) || 0;
+  const heightValue = Number(height) || 0;
+
+  const goalValue = goal || "Not set";
+  const activityValue = activity || "Moderate";
+
+  let bmiValue = 0;
+  if (heightValue > 0) {
+    bmiValue = weightValue / ((heightValue / 100) * (heightValue / 100));
+    bmiValue = Math.round(bmiValue * 10) / 10;
+  }
+
+  let caloriesValue = 2300;
+
+  if (activityValue === "Low") caloriesValue = 2000;
+  if (activityValue === "Moderate") caloriesValue = 2300;
+  if (activityValue === "High") caloriesValue = 2600;
+
+  if (goalValue === "Lose Weight") caloriesValue -= 300;
+  if (goalValue === "Gain Muscle") caloriesValue += 300;
+
+  localStorage.setItem("clientWeight", String(weightValue));
+  localStorage.setItem("clientHeight", String(heightValue));
+  localStorage.setItem("clientBMI", String(bmiValue));
+  localStorage.setItem("clientCalories", String(caloriesValue));
+  localStorage.setItem("clientGoal", goalValue);
+  localStorage.setItem("clientActivity", activityValue);
+
+  const history = JSON.parse(localStorage.getItem("clientHistory") || "[]");
+
+  history.push({
+    weight: weightValue,
+    bmi: bmiValue,
+    date: new Date().toLocaleDateString(),
+  });
+
+  localStorage.setItem("clientHistory", JSON.stringify(history));
+  // ✅ =============================
 }
-
-
-
-

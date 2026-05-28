@@ -19,13 +19,21 @@ export default function Sidebar() {
   return (
     <aside className="w-64 min-h-screen bg-gray-950 border-r border-gray-800 p-5 text-white">
 
-      <h1 className="text-xl font-bold mb-8">
-        ? AthleteOS
-      </h1>
+      <div className="mb-8">
+        <h1 className="text-xl font-bold tracking-wide">
+          {"\u26A1 AthleteOS"}
+        </h1>
+
+        <p className="text-xs text-gray-500 mt-1">
+          Admin Panel
+        </p>
+      </div>
 
       <nav className="space-y-2">
         {menu.map((item) => {
-          const active = pathname === item.href;
+          const active =
+            pathname === item.href ||
+            pathname.startsWith(item.href + "/");
 
           return (
             <Link
@@ -33,8 +41,8 @@ export default function Sidebar() {
               href={item.href}
               className={
                 active
-                  ? "block bg-blue-500 text-white px-4 py-2 rounded-xl"
-                  : "block text-gray-300 hover:bg-gray-800 px-4 py-2 rounded-xl transition"
+                  ? "block bg-blue-500 text-white px-4 py-3 rounded-xl transition"
+                  : "block text-gray-300 hover:bg-gray-800 hover:text-white px-4 py-3 rounded-xl transition"
               }
             >
               {item.name}
@@ -46,7 +54,3 @@ export default function Sidebar() {
     </aside>
   );
 }
-
-
-
-

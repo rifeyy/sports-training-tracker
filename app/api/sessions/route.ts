@@ -2,42 +2,66 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongoose";
 import { Session } from "@/models";
 
-// ✅ GET
 export async function GET() {
-  await connectDB();
+  try {
+    await connectDB();
 
-  const sessions = await Session.find();
+    const sessions = await Session.find().sort({ createdAt: -1 });
 
-  return NextResponse.json({
-    success: true,
-    data: sessions,
-  });
+    return NextResponse.json({
+      success: true,
+      data: sessions,
+    });
+  } catch (error: any) {
+    console.log("GET SESSIONS ERROR:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: error.message || "Get sessions error",
+      },
+      { status: 500 }
+    );
+  }
 }
 
-// ✅ POST ✅ FIX FINAL
 export async function POST(req: Request) {
-  await connectDB();
+  try {
+    await connectDB();
 
-  const body = await req.json();
+    const body = await req.json();
 
-  console.log("BODY:", body); // DEBUG
+    if (!body.athleteId || !body.type || !body.duration) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Athlete, type and duration are required",
+        },
+        { status: 400 }
+      );
+    }
 
-  const session = await Session.create({
-    athleteId: body.athleteId,
-    type: body.type,
-    duration: body.duration,
-    day: body.day,
-    hour: body.hour, // ✅ مهم
-  });
+    const session = await Session.create({
+      athleteId: body.athleteId,
+      type: body.type,
+      duration: Number(body.duration),
+      day: body.day || "Monday",
+      hour: body.hour || "",
+    });
 
-  console.log("CREATED:", session);
+    return NextResponse.json({
+      success: true,
+      data: session,
+    });
+  } catch (error: any) {
+    console.log("CREATE SESSION ERROR:", error);
 
-  return NextResponse.json({
-    success: true,
-    data: session,
-  });
+    return NextResponse.json(
+      {
+        success: false,
+        message: error.message || "Create session error",
+      },
+      { status: 500 }
+    );
+  }
 }
-
-
-
-
