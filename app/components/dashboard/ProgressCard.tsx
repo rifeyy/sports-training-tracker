@@ -15,17 +15,21 @@ export default function ProgressCard() {
     const savedStart = localStorage.getItem("clientStartWeight");
     const savedGoal = localStorage.getItem("clientGoalWeight");
 
-    const res = await fetch(`/api/client/metrics?userId=${userId}`);
-    const data = await res.json();
+    try {
+      const res = await fetch(`/api/client/metrics?userId=${userId}`);
+      const data = await res.json();
 
-    if (data.success && data.data.length > 0) {
-      const history = data.data;
-      const first = history[0];
-      const latest = history[history.length - 1];
+      if (data.success && data.data.length > 0) {
+        const history = data.data;
+        const first = history[0];
+        const latest = history[history.length - 1];
 
-      setStartWeight(savedStart ? Number(savedStart) : first.weight);
-      setCurrentWeight(latest.weight);
-      setGoalWeight(savedGoal ? Number(savedGoal) : 65);
+        setStartWeight(savedStart ? Number(savedStart) : first.weight);
+        setCurrentWeight(latest.weight);
+        setGoalWeight(savedGoal ? Number(savedGoal) : 65);
+      }
+    } catch (error) {
+      console.log("LOAD PROGRESS ERROR", error);
     }
   };
 
@@ -55,7 +59,6 @@ export default function ProgressCard() {
       : Math.min(100, Math.max(0, (currentChange / totalChangeNeeded) * 100));
 
   const remaining = Math.abs(currentWeight - goalWeight);
-
   const isGoalReached = progress >= 100;
 
   return (
@@ -64,12 +67,9 @@ export default function ProgressCard() {
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
 
         <div>
-          <h2 className="text-xl font-bold">
-            Global Progress
-          </h2>
-
+          <h2 className="text-xl font-bold">Global Progress</h2>
           <p className="text-gray-400 text-sm mt-1">
-            Progress calculated from your real MongoDB measurements.
+            Progress calculated from MongoDB measurements.
           </p>
         </div>
 
@@ -77,10 +77,7 @@ export default function ProgressCard() {
           <p className="text-4xl font-bold text-green-400">
             {progress.toFixed(0)}%
           </p>
-
-          <p className="text-gray-400 text-sm">
-            Completed
-          </p>
+          <p className="text-gray-400 text-sm">Completed</p>
         </div>
 
       </div>
@@ -103,7 +100,7 @@ export default function ProgressCard() {
             type="number"
             value={currentWeight}
             disabled
-            className="w-full bg-gray-800/60 p-3 rounded-xl mt-1 outline-none text-gray-400"
+            className="w-full bg-gray-800/60 p-3 rounded-xl mt-1 text-gray-400"
           />
         </div>
 
@@ -149,9 +146,8 @@ export default function ProgressCard() {
 
         <div className="bg-gray-800 p-4 rounded-xl">
           <p className="text-gray-400 text-sm">Remaining</p>
-
           <h3 className={isGoalReached ? "text-xl font-bold text-green-400" : "text-xl font-bold text-yellow-400"}>
-            {isGoalReached ? "Goal reached ?" : `${remaining.toFixed(1)}kg`}
+            {isGoalReached ? "Goal reached ✅" : `${remaining.toFixed(1)}kg`}
           </h3>
         </div>
 
@@ -159,44 +155,4 @@ export default function ProgressCard() {
 
     </div>
   );
-
-  // ✅ ===== BMI + CALORIES FIX =====
-  const weightValue = Number(weight) || 0;
-  const heightValue = Number(height) || 0;
-
-  const goalValue = goal || "Not set";
-  const activityValue = activity || "Moderate";
-
-  let bmiValue = 0;
-  if (heightValue > 0) {
-    bmiValue = weightValue / ((heightValue / 100) * (heightValue / 100));
-    bmiValue = Math.round(bmiValue * 10) / 10;
-  }
-
-  let caloriesValue = 2300;
-
-  if (activityValue === "Low") caloriesValue = 2000;
-  if (activityValue === "Moderate") caloriesValue = 2300;
-  if (activityValue === "High") caloriesValue = 2600;
-
-  if (goalValue === "Lose Weight") caloriesValue -= 300;
-  if (goalValue === "Gain Muscle") caloriesValue += 300;
-
-  localStorage.setItem("clientWeight", String(weightValue));
-  localStorage.setItem("clientHeight", String(heightValue));
-  localStorage.setItem("clientBMI", String(bmiValue));
-  localStorage.setItem("clientCalories", String(caloriesValue));
-  localStorage.setItem("clientGoal", goalValue);
-  localStorage.setItem("clientActivity", activityValue);
-
-  const history = JSON.parse(localStorage.getItem("clientHistory") || "[]");
-
-  history.push({
-    weight: weightValue,
-    bmi: bmiValue,
-    date: new Date().toLocaleDateString(),
-  });
-
-  localStorage.setItem("clientHistory", JSON.stringify(history));
-  // ✅ =============================
 }
