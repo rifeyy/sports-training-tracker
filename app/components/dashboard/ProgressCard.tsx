@@ -1,4 +1,6 @@
-﻿"use client";"use { useEffect, useState } from "react";
+﻿"use client";
+
+import { useEffect, useState } from "react";
 
 export default function ProgressCard() {
   const [startWeight, setStartWeight] = useState<number>(80);
@@ -47,7 +49,7 @@ export default function ProgressCard() {
     window.dispatchEvent(new Event("metricsUpdated"));
   };
 
-  // ✅ CALCULATIONS
+  // ✅ calculations
   const totalChangeNeeded = Math.abs(startWeight - goalWeight);
   const currentChange = Math.abs(startWeight - currentWeight);
 
@@ -64,7 +66,6 @@ export default function ProgressCard() {
 
       {/* HEADER */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-
         <div>
           <h2 className="text-xl font-bold">Global Progress</h2>
           <p className="text-gray-400 text-sm mt-1">
@@ -78,7 +79,6 @@ export default function ProgressCard() {
           </p>
           <p className="text-gray-400 text-sm">Completed</p>
         </div>
-
       </div>
 
       {/* INPUTS */}
@@ -147,7 +147,13 @@ export default function ProgressCard() {
 
         <div className="bg-gray-800 p-4 rounded-xl">
           <p className="text-gray-400 text-sm">Remaining</p>
-          <h3 className={isGoalReached ? "text-xl font-bold text-green-400" : "text-xl font-bold text-yellow-400"}>
+          <h3
+            className={
+              isGoalReached
+                ? "text-xl font-bold text-green-400"
+                : "text-xl font-bold text-yellow-400"
+            }
+          >
             {isGoalReached ? "Goal reached ✅" : `${remaining.toFixed(1)}kg`}
           </h3>
         </div>
@@ -157,4 +163,3 @@ export default function ProgressCard() {
     </div>
   );
 }
-
