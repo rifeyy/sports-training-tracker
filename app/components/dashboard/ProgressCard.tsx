@@ -1,21 +1,18 @@
-﻿"use client";
-
-import { useEffect, useState } from "react";
+﻿"use client";"use { useEffect, useState } from "react";
 
 export default function ProgressCard() {
-  const [startWeight, setStartWeight] = useState(80);
-  const [currentWeight, setCurrentWeight] = useState(70);
-  const [goalWeight, setGoalWeight] = useState(65);
+  const [startWeight, setStartWeight] = useState<number>(80);
+  const [currentWeight, setCurrentWeight] = useState<number>(70);
+  const [goalWeight, setGoalWeight] = useState<number>(65);
 
   const loadProgressData = async () => {
-    const userId = localStorage.getItem("userId");
-
-    if (!userId) return;
-
-    const savedStart = localStorage.getItem("clientStartWeight");
-    const savedGoal = localStorage.getItem("clientGoalWeight");
-
     try {
+      const userId = localStorage.getItem("userId");
+      if (!userId) return;
+
+      const savedStart = localStorage.getItem("clientStartWeight");
+      const savedGoal = localStorage.getItem("clientGoalWeight");
+
       const res = await fetch(`/api/client/metrics?userId=${userId}`);
       const data = await res.json();
 
@@ -24,12 +21,12 @@ export default function ProgressCard() {
         const first = history[0];
         const latest = history[history.length - 1];
 
-        setStartWeight(savedStart ? Number(savedStart) : first.weight);
-        setCurrentWeight(latest.weight);
+        setStartWeight(savedStart ? Number(savedStart) : first.weight || 0);
+        setCurrentWeight(latest.weight || 0);
         setGoalWeight(savedGoal ? Number(savedGoal) : 65);
       }
     } catch (error) {
-      console.log("LOAD PROGRESS ERROR", error);
+      console.log("LOAD PROGRESS ERROR:", error);
     }
   };
 
@@ -50,6 +47,7 @@ export default function ProgressCard() {
     window.dispatchEvent(new Event("metricsUpdated"));
   };
 
+  // ✅ CALCULATIONS
   const totalChangeNeeded = Math.abs(startWeight - goalWeight);
   const currentChange = Math.abs(startWeight - currentWeight);
 
@@ -64,6 +62,7 @@ export default function ProgressCard() {
   return (
     <div className="premium-card">
 
+      {/* HEADER */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
 
         <div>
@@ -82,6 +81,7 @@ export default function ProgressCard() {
 
       </div>
 
+      {/* INPUTS */}
       <div className="grid md:grid-cols-3 gap-4 mb-6">
 
         <div>
@@ -116,6 +116,7 @@ export default function ProgressCard() {
 
       </div>
 
+      {/* BUTTON */}
       <button
         onClick={saveProgress}
         className="bg-blue-500 hover:bg-blue-400 px-5 py-2 rounded-xl transition mb-6"
@@ -123,15 +124,15 @@ export default function ProgressCard() {
         Save Progress Goal
       </button>
 
+      {/* PROGRESS BAR */}
       <div className="w-full bg-gray-800 h-4 rounded-full overflow-hidden">
-
         <div
           className="bg-gradient-to-r from-green-400 to-blue-500 h-4 rounded-full transition-all duration-500"
           style={{ width: `${progress}%` }}
         />
-
       </div>
 
+      {/* STATS */}
       <div className="grid md:grid-cols-3 gap-4 mt-6">
 
         <div className="bg-gray-800 p-4 rounded-xl">
@@ -156,3 +157,4 @@ export default function ProgressCard() {
     </div>
   );
 }
+
